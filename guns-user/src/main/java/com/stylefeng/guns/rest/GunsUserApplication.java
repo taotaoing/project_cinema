@@ -9,6 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class GunsUserApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(GunsApiApplication.class, args);
+        SpringApplication.run(GunsUserApplication.class, args);
     }
 }
