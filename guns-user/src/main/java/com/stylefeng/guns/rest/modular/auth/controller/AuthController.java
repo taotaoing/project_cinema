@@ -1,6 +1,7 @@
 package com.stylefeng.guns.rest.modular.auth.controller;
 
 import com.stylefeng.guns.core.exception.GunsException;
+import com.stylefeng.guns.rest.Respond.ResponseVo;
 import com.stylefeng.guns.rest.common.exception.BizExceptionEnum;
 import com.stylefeng.guns.rest.modular.auth.controller.dto.AuthRequest;
 import com.stylefeng.guns.rest.modular.auth.controller.dto.AuthResponse;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 
 /**
  * 请求验证的
@@ -22,21 +24,26 @@ import javax.annotation.Resource;
 @RestController
 public class AuthController {
 
+
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
-    @Resource(name = "simpleValidator")
+    @Resource(name = "dbValidator")
     private IReqValidator reqValidator;
 
     @RequestMapping(value = "${jwt.auth-path}")
-    public ResponseEntity<?> createAuthenticationToken(AuthRequest authRequest) {
+    public ResponseVo<?> createAuthenticationToken(AuthRequest authRequest) {
+
 
         boolean validate = reqValidator.validate(authRequest);
 
         if (validate) {
             final String randomKey = jwtTokenUtil.getRandomKey();
             final String token = jwtTokenUtil.generateToken(authRequest.getUserName(), randomKey);
-            return ResponseEntity.ok(new AuthResponse(token, randomKey));
+            HashMap<String, String> hashMap = new HashMap<>();
+            hashMap.put("randomKey",randomKey);
+            hashMap.put("token",token);
+            return ResponseVo.success(hashMap);
         } else {
             throw new GunsException(BizExceptionEnum.AUTH_REQUEST_ERROR);
         }

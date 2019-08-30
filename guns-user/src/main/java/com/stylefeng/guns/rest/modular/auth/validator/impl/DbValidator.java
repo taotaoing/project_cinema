@@ -1,7 +1,9 @@
 package com.stylefeng.guns.rest.modular.auth.validator.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.stylefeng.guns.rest.common.persistence.dao.MtimeUserTMapper;
 import com.stylefeng.guns.rest.common.persistence.dao.UserMapper;
+import com.stylefeng.guns.rest.common.persistence.model.MtimeUserT;
 import com.stylefeng.guns.rest.common.persistence.model.User;
 import com.stylefeng.guns.rest.modular.auth.validator.IReqValidator;
 import com.stylefeng.guns.rest.modular.auth.validator.dto.Credence;
@@ -20,11 +22,13 @@ import java.util.List;
 public class DbValidator implements IReqValidator {
 
     @Autowired
-    UserMapper userMapper;
+    MtimeUserTMapper mtimeUserTMapper;
 
     @Override
     public boolean validate(Credence credence) {
-        List<User> users = userMapper.selectList(new EntityWrapper<User>().eq("userName", credence.getCredenceName()));
+        //判断用户名和密码
+        List<MtimeUserT> users = mtimeUserTMapper.selectList(new EntityWrapper<MtimeUserT>().eq("user_name", credence.getCredenceName())
+                                                                                .eq("user_pwd",credence.getCredenceCode()));
         if (users != null && users.size() > 0) {
             return true;
         } else {
