@@ -64,4 +64,6 @@ public class UserVO implements Serializable {
      * 修改时间
      */
     private Date updateTime;
+
+
 }

@@ -1,6 +1,7 @@
 package com.stylefeng.guns.rest.modular.auth.validator.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.stylefeng.guns.core.util.MD5Util;
 import com.stylefeng.guns.rest.common.persistence.dao.MtimeUserTMapper;
 import com.stylefeng.guns.rest.common.persistence.dao.UserMapper;
 import com.stylefeng.guns.rest.common.persistence.model.MtimeUserT;
@@ -28,7 +29,7 @@ public class DbValidator implements IReqValidator {
     public boolean validate(Credence credence) {
         //判断用户名和密码
         List<MtimeUserT> users = mtimeUserTMapper.selectList(new EntityWrapper<MtimeUserT>().eq("user_name", credence.getCredenceName())
-                                                                                .eq("user_pwd",credence.getCredenceCode()));
+                                                                                .eq("user_pwd", MD5Util.encrypt(credence.getCredenceCode())));
         if (users != null && users.size() > 0) {
             return true;
         } else {

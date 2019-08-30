@@ -39,6 +39,16 @@ public class AuthFilter extends OncePerRequestFilter {
             chain.doFilter(request, response);
             return;
         }
+        //忽略列表
+
+        String servletPath = request.getServletPath();
+        String ignoreUrl = jwtProperties.getIgnoreUrl();
+        if (ignoreUrl.contains(servletPath)){
+            chain.doFilter(request, response);
+            return;
+        }
+
+
         final String requestHeader = request.getHeader(jwtProperties.getHeader());
         String authToken = null;
         if (requestHeader != null && requestHeader.startsWith("Bearer ")) {

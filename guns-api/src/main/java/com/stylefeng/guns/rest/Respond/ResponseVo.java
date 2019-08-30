@@ -48,11 +48,19 @@ public  class ResponseVo<M> {
         ResponseVo<M> objectResponseVo = new ResponseVo<>();
         objectResponseVo.setStatus(1);
         objectResponseVo.setMsg(msg);
-
         return objectResponseVo;
-    }public static<M> ResponseVo unknown(String msg){
+    }
+
+    public static<M> ResponseVo success(String msg){
         ResponseVo<M> objectResponseVo = new ResponseVo<>();
-        objectResponseVo.setStatus(1);
+        objectResponseVo.setStatus(0);
+        objectResponseVo.setMsg(msg);
+        return objectResponseVo;
+    }
+
+    public static<M> ResponseVo unknown(String msg,int status){
+        ResponseVo<M> objectResponseVo = new ResponseVo<>();
+        objectResponseVo.setStatus(status);
         objectResponseVo.setMsg(msg);
         return objectResponseVo;
     }

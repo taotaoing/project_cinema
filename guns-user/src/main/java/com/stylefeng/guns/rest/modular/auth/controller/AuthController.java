@@ -7,6 +7,7 @@ import com.stylefeng.guns.rest.modular.auth.controller.dto.AuthRequest;
 import com.stylefeng.guns.rest.modular.auth.controller.dto.AuthResponse;
 import com.stylefeng.guns.rest.modular.auth.util.JwtTokenUtil;
 import com.stylefeng.guns.rest.modular.auth.validator.IReqValidator;
+import com.stylefeng.guns.rest.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,15 +29,14 @@ public class AuthController {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
-    @Resource(name = "dbValidator")
-    private IReqValidator reqValidator;
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(value = "${jwt.auth-path}")
     public ResponseVo<?> createAuthenticationToken(AuthRequest authRequest) {
 
-
-        boolean validate = reqValidator.validate(authRequest);
-
+        //调用自己的方法实现登录验证
+        boolean validate = userService.login(authRequest.getUserName(),authRequest.getPassword());
         if (validate) {
             final String randomKey = jwtTokenUtil.getRandomKey();
             final String token = jwtTokenUtil.generateToken(authRequest.getUserName(), randomKey);
