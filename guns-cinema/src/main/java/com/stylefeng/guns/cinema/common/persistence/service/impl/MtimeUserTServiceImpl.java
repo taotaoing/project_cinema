@@ -1,3 +1,4 @@
+/*
 package com.stylefeng.guns.cinema.common.persistence.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
@@ -9,6 +10,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+*/
 /**
  * <p>
  * 用户表 服务实现类
@@ -16,7 +18,8 @@ import org.springframework.stereotype.Component;
  *
  * @author stylefeng
  * @since 2019-08-29
- */
+ *//*
+
 @Component
 @Service(interfaceClass = UserService.class)
 public class MtimeUserTServiceImpl implements UserService {
@@ -35,3 +38,4 @@ public class MtimeUserTServiceImpl implements UserService {
         return false;
     }
 }
+*/

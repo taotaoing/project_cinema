@@ -14,9 +14,10 @@ import java.util.List;
  * 账号密码验证
  *
  * @author fengshuonan
- * @date 2017-08-23 12:34
- */
-@Service
+ * @date 2017-08-23 12:34*/
+
+
+/*@Service
 public class DbValidator implements IReqValidator {
 
     @Autowired
@@ -31,4 +32,4 @@ public class DbValidator implements IReqValidator {
             return false;
         }
     }
-}
+}*/
