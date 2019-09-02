@@ -7,6 +7,7 @@ import com.stylefeng.guns.gateway.modular.auth.controller.dto.AuthResponse;
 import com.stylefeng.guns.gateway.common.exception.BizExceptionEnum;
 import com.stylefeng.guns.gateway.modular.auth.util.JwtTokenUtil;
 import com.stylefeng.guns.api.user.UserAPI;
+import com.stylefeng.guns.gateway.modular.vo.ResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,9 +31,10 @@ public class AuthController {
     UserAPI userAPI;
 
     @RequestMapping(value = "${jwt.auth-path}")
-    public ResponseEntity<?> createAuthenticationToken(AuthRequest authRequest) {
+    public ResponseVO createAuthenticationToken(AuthRequest authRequest) {
         boolean validate = true;
         //boolean validate = reqValidator.validate(authRequest);
+
         int userId = userAPI.login(authRequest.getUserName(), authRequest.getPassword());
         if (userId == 0) {
             validate = false;
@@ -40,10 +42,11 @@ public class AuthController {
 
         if (validate) {
             final String randomKey = jwtTokenUtil.getRandomKey();
-            final String token = jwtTokenUtil.generateToken(authRequest.getUserName(), randomKey);
-            return ResponseEntity.ok(new AuthResponse(token, randomKey));
+            final String token = jwtTokenUtil.generateToken("" + userId, randomKey);
+
+            return ResponseVO.success(new AuthResponse(token, randomKey));
         } else {
-            throw new GunsException(BizExceptionEnum.AUTH_REQUEST_ERROR);
+            return ResponseVO.serviceFail("用户名或密码错误");
         }
     }
 }

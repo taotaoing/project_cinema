@@ -8,7 +8,7 @@ public class CurrentUser {
     //通过线程绑定存储用户的 userId
     public static final ThreadLocal<String> threadLocal = new ThreadLocal<>();
 
-    public static void saveSserId(String userId) {
+    public static void saveUserId(String userId) {
         threadLocal.set(userId);
     }
     public static String getUserId() {
