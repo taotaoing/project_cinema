@@ -1,4 +1,4 @@
-package com.stylefeng.guns.rest.modular.vo;
+package com.stylefeng.guns.order.modular.vo;
 
 public class ResponseVo {
     private String imgPre;

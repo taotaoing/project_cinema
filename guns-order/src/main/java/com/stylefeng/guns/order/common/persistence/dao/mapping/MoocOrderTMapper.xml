@@ -17,4 +17,8 @@
         <result column="order_status" property="orderStatus" />
     </resultMap>
 
+    <select id="selectOrdersByFieldId" parameterType="java.lang.Integer" resultType="String">
+        SELECT seats_ids FROM mooc_order_t WHERE field_id = ${field.id}
+    </select>
+
 </mapper>

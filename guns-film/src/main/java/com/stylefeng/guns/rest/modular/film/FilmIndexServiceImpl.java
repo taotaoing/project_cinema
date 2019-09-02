@@ -1,11 +1,11 @@
 package com.stylefeng.guns.rest.modular.film;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.stylefeng.guns.rest.common.persistence.model.MtimeFilmT;
 import com.stylefeng.guns.rest.common.persistence.dao.MtimeBannerTMapper;
 
 
 import com.stylefeng.guns.rest.common.persistence.dao.MtimeFilmTMapper;
-import com.stylefeng.guns.rest.common.persistence.model.MtimeFilmT;
 import com.stylefeng.guns.api.film.filmService.FilmIndexService;
 import com.stylefeng.guns.api.film.filmVo.BannerVo;
 import com.stylefeng.guns.api.film.filmVo.FilmIndexVo;

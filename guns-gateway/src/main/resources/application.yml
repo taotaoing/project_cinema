@@ -39,6 +39,8 @@ spring:
     protocol:
       name: dubbo
       port: 20880
+    consumer:
+      timeout: 50000
 
 logging:
   level.root: info

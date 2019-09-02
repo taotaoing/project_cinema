@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.rest.common.persistence.dao.MtimeActorTMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.stylefeng.guns.rest.common.persistence.model.MtimeActorT">
+        <id column="UUID" property="uuid" />
+        <result column="actor_name" property="actorName" />
+        <result column="actor_img" property="actorImg" />
+    </resultMap>
+
+    <resultMap id="ActorInfoResultMap" type="com.stylefeng.guns.api.film.vo.FilmActorVO">
+        <result column="actor_img" property="imgAddress" />
+        <result column="actor_name" property="directorName" />
+        <result column="role_name" property="roleName" />
+    </resultMap>
+
+    <select id="queryActorInfosByFilmId" resultMap="ActorInfoResultMap">
+        select
+        ma.actor_img, ma.actor_name, mfa.role_name
+        from mtime_film_actor_t mfa
+        left join mtime_actor_t ma on ma.UUID = mfa.actor_id
+        where film_id = #{filmId}
+    </select>
+</mapper>
