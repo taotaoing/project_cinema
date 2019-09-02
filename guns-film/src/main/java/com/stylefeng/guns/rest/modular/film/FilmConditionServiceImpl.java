@@ -7,11 +7,11 @@ import com.stylefeng.guns.rest.common.persistence.dao.MtimeYearDictTMapper;
 import com.stylefeng.guns.rest.common.persistence.model.MtimeCatDictT;
 import com.stylefeng.guns.rest.common.persistence.model.MtimeSourceDictT;
 import com.stylefeng.guns.rest.common.persistence.model.MtimeYearDictT;
-import com.stylefeng.guns.rest.film.filmService.FilmConditionService;
-import com.stylefeng.guns.rest.film.filmVo.CatInfoVo;
-import com.stylefeng.guns.rest.film.filmVo.FilmConditionVo;
-import com.stylefeng.guns.rest.film.filmVo.SourceInfoVo;
-import com.stylefeng.guns.rest.film.filmVo.YearInfoVo;
+import com.stylefeng.guns.api.film.filmService.FilmConditionService;
+import com.stylefeng.guns.api.film.filmVo.CatInfoVo;
+import com.stylefeng.guns.api.film.filmVo.FilmConditionVo;
+import com.stylefeng.guns.api.film.filmVo.SourceInfoVo;
+import com.stylefeng.guns.api.film.filmVo.YearInfoVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

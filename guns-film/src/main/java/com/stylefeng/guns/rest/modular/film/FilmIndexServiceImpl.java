@@ -5,13 +5,12 @@ import com.stylefeng.guns.rest.common.persistence.dao.MtimeBannerTMapper;
 
 
 import com.stylefeng.guns.rest.common.persistence.dao.MtimeFilmTMapper;
-import com.stylefeng.guns.rest.common.persistence.model.MtimeBannerT;
 import com.stylefeng.guns.rest.common.persistence.model.MtimeFilmT;
-import com.stylefeng.guns.rest.film.filmService.FilmIndexService;
-import com.stylefeng.guns.rest.film.filmVo.BannerVo;
-import com.stylefeng.guns.rest.film.filmVo.FilmIndexVo;
-import com.stylefeng.guns.rest.film.filmVo.FilmInfo;
-import com.stylefeng.guns.rest.film.filmVo.FilmVo;
+import com.stylefeng.guns.api.film.filmService.FilmIndexService;
+import com.stylefeng.guns.api.film.filmVo.BannerVo;
+import com.stylefeng.guns.api.film.filmVo.FilmIndexVo;
+import com.stylefeng.guns.api.film.filmVo.FilmInfo;
+import com.stylefeng.guns.api.film.filmVo.FilmVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

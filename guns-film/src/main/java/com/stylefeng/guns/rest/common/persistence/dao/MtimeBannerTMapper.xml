@@ -11,7 +11,7 @@
 </resultMap>
 
     <!--&lt;!&ndash;查询所有banner对象&ndash;&gt;-->
-    <select id="selectBannersBean" parameterType="java.lang.String" resultType="com.stylefeng.guns.rest.film.filmVo.BannerVo">
+    <select id="selectBannersBean" parameterType="java.lang.String" resultType="com.stylefeng.guns.api.film.filmVo.BannerVo">
         SELECT
           UUID as bannerId,
           banner_address AS bannerAddress,

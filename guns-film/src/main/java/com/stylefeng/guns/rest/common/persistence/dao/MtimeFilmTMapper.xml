@@ -27,7 +27,7 @@
     </select>
 
     <!--查询所有电影对象-->
-    <select id="selectFilms" parameterType="java.lang.String" resultType="com.stylefeng.guns.rest.film.filmVo.FilmInfo">
+    <select id="selectFilms" parameterType="java.lang.String" resultType="com.stylefeng.guns.api.film.filmVo.FilmInfo">
         SELECT
             UUID AS filmId,
             film_type AS filmType,

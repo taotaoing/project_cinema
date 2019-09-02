@@ -1,11 +1,6 @@
-package com.stylefeng.guns.rest.film.filmService;
+package com.stylefeng.guns.api.film.filmService;
 
-import com.stylefeng.guns.rest.film.filmVo.BannerVo;
-import com.stylefeng.guns.rest.film.filmVo.FilmIndexVo;
-import com.stylefeng.guns.rest.film.filmVo.FilmInfo;
-import com.stylefeng.guns.rest.film.filmVo.FilmVo;
-
-import java.util.List;
+import com.stylefeng.guns.api.film.filmVo.FilmIndexVo;
 
 public interface FilmIndexService {
 //    //获取banners

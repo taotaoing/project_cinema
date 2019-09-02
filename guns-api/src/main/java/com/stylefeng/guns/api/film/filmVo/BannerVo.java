@@ -1,4 +1,4 @@
-package com.stylefeng.guns.rest.film.filmVo;
+package com.stylefeng.guns.api.film.filmVo;
 
 import lombok.Data;
 

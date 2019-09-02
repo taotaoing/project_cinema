@@ -2,7 +2,7 @@ package com.stylefeng.guns.rest.common.persistence.dao;
 
 import com.stylefeng.guns.rest.common.persistence.model.MtimeFilmT;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
-import com.stylefeng.guns.rest.film.filmVo.FilmInfo;
+import com.stylefeng.guns.api.film.filmVo.FilmInfo;
 
 import java.util.List;
 
