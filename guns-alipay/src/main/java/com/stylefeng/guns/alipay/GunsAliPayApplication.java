@@ -8,9 +8,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication(scanBasePackages = {"com.stylefeng.guns"})
 @MapperScan("com.stylefeng.guns.user.common.persistence.dao")
 @EnableDubboConfiguration
-public class GunsUserApplication {
+public class GunsAliPayApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(GunsUserApplication.class, args);
+        SpringApplication.run(GunsAliPayApplication.class, args);
     }
 }
