@@ -23,11 +23,11 @@ import java.util.Map;
 @RestController
 @RequestMapping("/film")
 public class FilmIndexController {
-    @Reference(interfaceClass = FilmIndexService.class)
+    @Reference(interfaceClass = FilmIndexService.class,check = false)
     private FilmIndexService filmIndexService;
-    @Reference(interfaceClass = FilmConditionService.class)
+    @Reference(interfaceClass = FilmConditionService.class,check = false)
     private FilmConditionService filmConditionService;
-    @Reference(interfaceClass = FilmService.class)
+    @Reference(interfaceClass = FilmService.class,check = false)
     private FilmService filmService;
 
     @RequestMapping(value = "/getIndex",method = RequestMethod.GET)
