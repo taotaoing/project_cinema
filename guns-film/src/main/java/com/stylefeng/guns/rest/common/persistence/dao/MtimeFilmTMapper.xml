@@ -4,7 +4,7 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.stylefeng.guns.rest.common.persistence.model.MtimeFilmT">
-        <id column="UUID" property="uuid" />
+        <id column="UUID" property="filmId" />
         <result column="film_name" property="filmName" />
         <result column="film_type" property="filmType" />
         <result column="img_address" property="imgAddress" />
@@ -19,4 +19,33 @@
         <result column="film_status" property="filmStatus" />
     </resultMap>
 
+    <!--查询热门电影数量-->
+    <select id="countHotFilms" parameterType="java.lang.Integer" resultType="int">
+        SELECT count(*)
+        FROM mtime_film_t
+        where film_status = 1
+    </select>
+
+    <!--查询所有电影对象-->
+    <select id="selectFilms" parameterType="java.lang.String" resultType="com.stylefeng.guns.rest.film.filmVo.FilmInfo">
+        SELECT
+            UUID AS filmId,
+            film_type AS filmType,
+            img_address AS imgAddress,
+            film_name AS filmName,
+            film_score AS filmScore,
+            film_preSaleNum AS expectNum,
+            film_time AS showTime,
+            film_box_office AS boxNum,
+            film_score AS score
+        FROM mtime_film_t
+        ORDER BY film_box_office DESC
+    </select>
+
+    <!--查询即将上映电影数量-->
+    <select id="countSoonFilms" parameterType="java.lang.Integer" resultType="int">
+        SELECT count(*)
+        FROM mtime_film_t
+        WHERE film_status = 2
+    </select>
 </mapper>
