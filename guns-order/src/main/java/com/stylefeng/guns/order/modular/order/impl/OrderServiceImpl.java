@@ -5,6 +5,7 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.stylefeng.guns.api.order.OrderServiceAPI;
 import com.stylefeng.guns.api.order.vo.OrderInfoVO;
 import com.stylefeng.guns.order.common.persistence.dao.MoocOrderTMapper;
+import com.stylefeng.guns.order.common.persistence.model.MoocOrderT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -70,7 +71,16 @@ public class OrderServiceImpl implements OrderServiceAPI {
     //下单
     @Override
     public OrderInfoVO saveOrderInfo(Integer fieldId, String soldSeats, String seatsName, Integer userId) {
-        
         return null;
+    }
+
+
+    @Override
+    public OrderInfoVO getOrderInfoById(String orderId) {
+        MoocOrderT moocOrderT = moocOrderTMapper.selectById(orderId);
+        OrderInfoVO orderInfoVO = new OrderInfoVO();
+        orderInfoVO.setOrderId(orderId);
+
+        return orderInfoVO;
     }
 }

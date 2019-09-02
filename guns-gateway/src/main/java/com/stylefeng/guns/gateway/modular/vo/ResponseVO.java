@@ -14,8 +14,23 @@ public class ResponseVO<M> {
     private String msg;
     //返回实体
     private M data;
+    // 图片前缀
+    private String imgPre;
+    // 分页使用
+    private int nowPage;
+    private int totalPage;
 
     public ResponseVO() {
+    }
+
+
+    public static<M> ResponseVO success(String imgPre, M m) {
+        ResponseVO responseVO = new ResponseVO();
+        responseVO.setStatus(0);
+        responseVO.setData(m);
+        responseVO.setImgPre(imgPre);
+
+        return responseVO;
     }
 
     public int getStatus() {

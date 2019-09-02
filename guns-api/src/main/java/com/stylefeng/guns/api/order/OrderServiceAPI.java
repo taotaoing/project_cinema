@@ -9,6 +9,11 @@ public interface OrderServiceAPI {
 
     //判断座位是否卖出
     boolean isSoldSeats(Integer fieldId,String soldSeats);
+
     //创建订单详情
     OrderInfoVO saveOrderInfo(Integer fieldId, String soldSeats, String seatsName, Integer userId);
+
+    //通过 orderId 查询订单详情
+    OrderInfoVO getOrderInfoById(String orderId);
+
 }
