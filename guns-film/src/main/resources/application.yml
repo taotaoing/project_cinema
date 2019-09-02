@@ -1,6 +1,6 @@
 rest:
-  auth-open: true #jwt鉴权机制是否开启(true或者false)
-  sign-open: true #签名机制是否开启(true或false)
+  auth-open: false #jwt鉴权机制是否开启(true或者false)
+  sign-open: false #签名机制是否开启(true或false)
 
 jwt:
   header: Authorization   #http请求头所需要的字段
@@ -13,7 +13,7 @@ server:
   port: 8083 #项目端口
 
 mybatis-plus:
-  mapper-locations: classpath*:com/stylefeng/guns/rest/***/mapping/*.xml
+  mapper-locations: classpath*:com/stylefeng/guns/rest/**/mapping/*.xml
   typeAliasesPackage: com.stylefeng.guns.rest.common.persistence.model
   global-config:
     id-type: 0  #0:数据库ID自增   1:用户输入id  2:全局唯一id(IdWorker)  3:全局唯一ID(uuid)
@@ -35,6 +35,7 @@ spring:
       password: 123456
       filters: log4j,wall,mergeStat
   dubbo:
+    server: true
     registry: zookeeper://localhost:2181
     protocol:
       name: dubbo

@@ -1,7 +1,7 @@
 package com.stylefeng.guns.api.cinema;
 
 import com.baomidou.mybatisplus.plugins.Page;
-import com.stylefeng.guns.api.cinema.VO.CinemaVO;
+import com.stylefeng.guns.api.cinema.VO.*;
 import com.stylefeng.guns.api.cinema.VO.*;
 
 import java.util.List;

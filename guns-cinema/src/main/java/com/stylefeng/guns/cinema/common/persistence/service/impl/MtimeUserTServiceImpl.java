@@ -4,7 +4,7 @@ package com.stylefeng.guns.cinema.common.persistence.service.impl;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.stylefeng.guns.cinema.common.persistence.model.MtimeUserT;
 import com.stylefeng.guns.cinema.common.persistence.dao.MtimeUserTMapper;
-import com.stylefeng.guns.api.user.vo.UserVO;
+import UserVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

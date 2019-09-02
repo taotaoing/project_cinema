@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.rest.common.persistence.dao.MtimeBannerTMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.stylefeng.guns.rest.common.persistence.model.MtimeBannerT">
+    <id column="UUID" property="bannerId" />
+    <result column="banner_address" property="bannerAddress" />
+    <result column="banner_url" property="bannerUrl" />
+    <result column="is_valid" property="isValid" />
+</resultMap>
+
+    <!--&lt;!&ndash;查询所有banner对象&ndash;&gt;-->
+    <select id="selectBannersBean" parameterType="java.lang.String" resultType="com.stylefeng.guns.api.film.filmVo.BannerVo">
+        SELECT
+          UUID as bannerId,
+          banner_address AS bannerAddress,
+          banner_url AS bannerUrl
+        from mtime_banner_t
+    </select>
+
+</mapper>
