@@ -28,7 +28,7 @@ mybatis-plus:
 
 spring:
   application:
-    name: guns-user
+    name: guns-cinema
   datasource:
       url: jdbc:mysql://127.0.0.1:3306/project4_db?autoReconnect=true&useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8
       username: root
@@ -36,7 +36,7 @@ spring:
       filters: log4j,wall,mergeStat
   dubbo:
     registry: zookeeper://localhost:2181
-    protocal:
+    protocol:
       name: dubbo
       port: 20882
 logging:

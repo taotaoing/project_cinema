@@ -67,6 +67,13 @@
             <version>0.0.1</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>
