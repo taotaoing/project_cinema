@@ -1,4 +1,4 @@
-package com.stylefeng.guns.cinema.persistence.service.Impl;
+package com.stylefeng.guns.cinema.persistence.service;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;

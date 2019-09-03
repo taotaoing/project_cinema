@@ -1,12 +1,9 @@
 package com.stylefeng.guns;
 
-import com.stylefeng.guns.gateway.modular.cinema.CinemaController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.HashMap;
 
 //@RunWith(SpringRunner.class)
 //@SpringBootTest
@@ -39,13 +36,6 @@ public class GunsRestApplicationTests {
 		System.out.println(demo7==demo8);
 
 		System.out.println(demo9==demo10);
-	}
-
-	@Test
-	public void mytest2() {
-		CinemaController cinemaController = new CinemaController();
-		HashMap fields = cinemaController.getFields(1);
-		System.out.println("fields = " + fields);
 	}
 
 }
