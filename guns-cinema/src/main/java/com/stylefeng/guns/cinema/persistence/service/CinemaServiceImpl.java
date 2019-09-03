@@ -4,14 +4,8 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.api.cinema.VO.*;
-import com.stylefeng.guns.cinema.persistence.dao.MtimeAreaDictTMapper;
-import com.stylefeng.guns.cinema.persistence.dao.MtimeBrandDictTMapper;
-import com.stylefeng.guns.cinema.persistence.dao.MtimeCinemaTMapper;
-import com.stylefeng.guns.cinema.persistence.dao.MtimeHallDictTMapper;
-import com.stylefeng.guns.cinema.persistence.model.MtimeAreaDictT;
-import com.stylefeng.guns.cinema.persistence.model.MtimeBrandDictT;
-import com.stylefeng.guns.cinema.persistence.model.MtimeCinemaT;
-import com.stylefeng.guns.cinema.persistence.model.MtimeHallDictT;
+import com.stylefeng.guns.cinema.persistence.dao.*;
+import com.stylefeng.guns.cinema.persistence.model.*;
 import com.stylefeng.guns.api.cinema.CinemaServiceAPI;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +32,8 @@ public class CinemaServiceImpl implements CinemaServiceAPI {
     private MtimeAreaDictTMapper mtimeAreaDictTMapper;
     @Autowired
     private MtimeHallDictTMapper mtimeHallDictTMapper;
+    @Autowired
+    private MtimeFieldTMapper mtimeFieldTMapper;
 
     @Override
     public Page<CinemaVO> getCinemas(CinemaQueryVO cinemaQueryVO) {
@@ -182,4 +178,58 @@ public class CinemaServiceImpl implements CinemaServiceAPI {
 
         return hallTypeVOS;
     }
+    @Override
+    public CinemaInfoVO getCinemaInfoById(int cinemaId){
+
+        // 数据实体
+        MtimeCinemaT moocCinemaT =mtimeCinemaTMapper.selectById(cinemaId);
+        // 将数据实体转换成业务实体
+        CinemaInfoVO cinemaInfoVO = new CinemaInfoVO();
+        cinemaInfoVO.setCinemaAdress(moocCinemaT.getCinemaAddress());
+        cinemaInfoVO.setImgUrl(moocCinemaT.getImgAddress());
+        cinemaInfoVO.setCinemaPhone(moocCinemaT.getCinemaPhone());
+        cinemaInfoVO.setCinemaName(moocCinemaT.getCinemaName());
+        cinemaInfoVO.setCinemaId(moocCinemaT.getUuid()+"");
+
+        return cinemaInfoVO;
+    }
+
+    //6、获取所有电影的信息和对应的放映场次信息，根据影院编号
+    @Override
+    public List<FilmInfoVO> getFilmInfoByCinemaId(int cinemaId){
+
+        List<FilmInfoVO> filmInfos = mtimeFieldTMapper.getFilmInfos(cinemaId);
+
+        return filmInfos;
+    }
+    //7、根据放映场次ID获取放映信息
+    @Override
+    public HallInfoVO getFilmFieldInfo(int fieldId){
+
+        HallInfoVO hallInfoVO = mtimeFieldTMapper.getHallInfo(fieldId);
+
+        return hallInfoVO;
+    }
+    //8、根据放映场次查询播放的电影编号，然后根据电影编号获取对应的电影信息
+    @Override
+    public FilmInfoVO getFilmInfoByFieldId(int fieldId){
+
+        FilmInfoVO filmInfoVO = mtimeFieldTMapper.getFilmInfoById(fieldId);
+
+        return filmInfoVO;
+    }
+
+    @Override
+    public OrderQueryVO getOrderNeeds(int fieldId) {
+
+        OrderQueryVO orderQueryVO = new OrderQueryVO();
+
+        MtimeFieldT moocFieldT = mtimeFieldTMapper.selectById(fieldId);
+
+        orderQueryVO.setCinemaId(moocFieldT.getCinemaId()+"");
+        orderQueryVO.setFilmPrice(moocFieldT.getPrice()+"");
+
+        return orderQueryVO;
+    }
+
 }
