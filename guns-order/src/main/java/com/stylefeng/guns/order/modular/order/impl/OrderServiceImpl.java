@@ -80,7 +80,12 @@ public class OrderServiceImpl implements OrderServiceAPI {
         MoocOrderT moocOrderT = moocOrderTMapper.selectById(orderId);
         OrderInfoVO orderInfoVO = new OrderInfoVO();
         orderInfoVO.setOrderId(orderId);
-
         return orderInfoVO;
+    }
+
+    //订单支付成功以后状态值改为1
+    @Override
+    public boolean paySuccess(String orderId) {
+        return false;
     }
 }

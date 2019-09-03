@@ -3,7 +3,7 @@ package com.stylefeng.guns.order.modular.film;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.stylefeng.guns.api.film.filmService.FilmConditionService;
 import com.stylefeng.guns.api.film.filmVo.FilmConditionVo;
-import com.stylefeng.guns.rest.modular.vo.ResponseVo;
+import com.stylefeng.guns.order.modular.vo.ResponseVo;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
