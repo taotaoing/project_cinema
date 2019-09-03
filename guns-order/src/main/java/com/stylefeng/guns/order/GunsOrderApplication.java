@@ -6,7 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication(scanBasePackages = {"com.stylefeng.guns"})
-@MapperScan("com.stylefeng.guns.user.common.persistence.dao")
+@MapperScan("com.stylefeng.guns.order.common.persistence.dao")
 @EnableDubboConfiguration
 public class GunsOrderApplication {
 

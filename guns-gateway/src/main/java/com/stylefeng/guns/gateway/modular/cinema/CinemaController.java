@@ -3,13 +3,18 @@ package com.stylefeng.guns.gateway.modular.cinema;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.api.cinema.CinemaServiceAPI;
+import com.stylefeng.guns.api.cinema.FieldServiceAPI;
 import com.stylefeng.guns.api.cinema.VO.*;
+import com.stylefeng.guns.api.cinema.VO.getFieldInfo.FieldInfo;
+import com.stylefeng.guns.api.cinema.VO.getFields.Fields;
 import com.stylefeng.guns.gateway.modular.cinema.VO.CinemaListResponseVO;
 import com.stylefeng.guns.gateway.modular.cinema.VO.ResponseVO;
+import com.stylefeng.guns.gateway.modular.cinema.utils.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -64,6 +69,41 @@ public class CinemaController {
             log.error("获取条件列表失败", e);
             return ResponseVO.serviceFail("获取影院查询条件失败");
         }
+    }
+
+
+
+
+    @Reference(interfaceClass= FieldServiceAPI.class, check = false)
+    private FieldServiceAPI fieldServiceAPI;
+
+
+    @RequestMapping("getFields")
+    public HashMap getFields(int cinemaId){
+        Fields fields = fieldServiceAPI.searchFieldsByCinemaId(cinemaId);
+        int status;
+        if(fields!=null){
+            status = 0;
+        }
+        else  {
+            status=1;
+        }
+        HashMap map = Result.response(status, fields);
+        return map;
+    }
+
+    @RequestMapping("getFieldInfo")
+    public HashMap getFieldInfo(int cinemaId,int fieldId){
+        FieldInfo fieldInfo = fieldServiceAPI.searchFieldInfoByCinemaIdAndFieldId(cinemaId,fieldId);
+        int status;
+        if(fieldInfo!=null){
+            status = 0;
+        }
+        else  {
+            status=1;
+        }
+        HashMap map = Result.response(status, fieldInfo);
+        return map;
     }
 
 }
