@@ -8,8 +8,27 @@ public  class ResponseVo<M> {
     private String msg;
     private int status;
     private M data;
+    //分页使用
+    private int nowPage;
+    private int totalPage;
 
     public ResponseVo() {
+    }
+
+    public int getNowPage() {
+        return nowPage;
+    }
+
+    public void setNowPage(int nowPage) {
+        this.nowPage = nowPage;
+    }
+
+    public int getTotalPage() {
+        return totalPage;
+    }
+
+    public void setTotalPage(int totalPage) {
+        this.totalPage = totalPage;
     }
 
     public String getMsg() {
@@ -62,5 +81,15 @@ public  class ResponseVo<M> {
         objectResponseVo.setStatus(status);
         objectResponseVo.setMsg(msg);
         return objectResponseVo;
+    }
+
+    public static<M> ResponseVo success(int nowPage,int totalPage,String imgPre,M m){
+        ResponseVo responseVO = new ResponseVo();
+        responseVO.setStatus(0);
+        responseVO.setData(m);
+        responseVO.setTotalPage(totalPage);
+        responseVO.setNowPage(nowPage);
+
+        return responseVO;
     }
 }

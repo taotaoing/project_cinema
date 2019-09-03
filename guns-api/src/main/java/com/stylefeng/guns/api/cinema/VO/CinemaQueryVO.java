@@ -6,7 +6,6 @@ import java.io.Serializable;
 
 @Data
 public class CinemaQueryVO implements Serializable {
-
     private Integer brandId=99;
     private Integer districtId=99;
     private Integer hallType=99;
