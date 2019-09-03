@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class HallInfo implements Serializable {
    private Integer hallFieldId;
    private String  hallName;
-   private String price;
+   private Integer price;
    private String seatFile;
    private String soldSeats;
 
@@ -25,11 +25,11 @@ public class HallInfo implements Serializable {
         this.hallName = hallName;
     }
 
-    public String getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 
