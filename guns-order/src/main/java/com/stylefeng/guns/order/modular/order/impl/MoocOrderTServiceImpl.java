@@ -12,6 +12,7 @@ import com.stylefeng.guns.api.cinema.VO.OrderVO;
 import com.stylefeng.guns.api.film.filmService.FilmConditionService;
 import com.stylefeng.guns.api.film.filmService.FilmIndexService;
 import com.stylefeng.guns.api.order.OrderServiceAPI;
+import com.stylefeng.guns.api.order.vo.OrderInfoVO;
 import com.stylefeng.guns.order.common.persistence.dao.MoocOrderTMapper;
 import com.stylefeng.guns.order.common.persistence.model.MoocOrderT;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -176,6 +177,12 @@ public class MoocOrderTServiceImpl extends ServiceImpl<MoocOrderTMapper, MoocOrd
             String soldSeatsByFieldId = moocOrderTMapper.getSoldSeatsByFieldId(fieldId);
             return soldSeatsByFieldId;
         }
+    }
+
+    @Override
+    public OrderVO getOrderInfoById(String orderId) {
+        OrderVO orderInfoById = moocOrderTMapper.getOrderInfoById(orderId);
+        return orderInfoById;
     }
 
     @Override

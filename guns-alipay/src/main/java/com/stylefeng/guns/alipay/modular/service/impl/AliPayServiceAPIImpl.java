@@ -18,6 +18,7 @@ import com.stylefeng.guns.alipay.modular.alipay.service.impl.AlipayTradeWithHBSe
 import com.stylefeng.guns.api.alipay.AliPayServiceAPI;
 import com.stylefeng.guns.api.alipay.vo.AliPayInfoVO;
 import com.stylefeng.guns.api.alipay.vo.AliPayResultVO;
+import com.stylefeng.guns.api.cinema.VO.OrderVO;
 import com.stylefeng.guns.api.order.OrderServiceAPI;
 import com.stylefeng.guns.api.order.vo.OrderInfoVO;
 import lombok.extern.slf4j.Slf4j;
@@ -153,7 +154,7 @@ public class AliPayServiceAPIImpl implements AliPayServiceAPI {
     public String trade_precreate(String orderId) {
         String filePath = "";
         //查询订单详情
-        OrderInfoVO orderInfoVO = orderServiceAPI.getOrderInfoById(orderId);
+        OrderVO orderInfoVO = orderServiceAPI.getOrderInfoById(orderId);
 
 
         // (必填) 商户网站订单系统中唯一订单号，64个字符以内，只能包含字母、数字、下划线，
