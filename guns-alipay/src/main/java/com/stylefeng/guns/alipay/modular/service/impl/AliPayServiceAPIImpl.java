@@ -15,17 +15,22 @@ import com.stylefeng.guns.alipay.modular.alipay.service.AlipayTradeService;
 import com.stylefeng.guns.alipay.modular.alipay.service.impl.AlipayMonitorServiceImpl;
 import com.stylefeng.guns.alipay.modular.alipay.service.impl.AlipayTradeServiceImpl;
 import com.stylefeng.guns.alipay.modular.alipay.service.impl.AlipayTradeWithHBServiceImpl;
+import com.stylefeng.guns.alipay.modular.alipay.utils.ZxingUtils;
+import com.stylefeng.guns.alipay.modular.auth.util.MyOssClientUtil;
 import com.stylefeng.guns.api.alipay.AliPayServiceAPI;
 import com.stylefeng.guns.api.alipay.vo.AliPayInfoVO;
 import com.stylefeng.guns.api.alipay.vo.AliPayResultVO;
 import com.stylefeng.guns.api.cinema.VO.OrderVO;
 import com.stylefeng.guns.api.order.OrderServiceAPI;
-import com.stylefeng.guns.api.order.vo.OrderInfoVO;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author 申涛涛
@@ -38,6 +43,9 @@ public class AliPayServiceAPIImpl implements AliPayServiceAPI {
 
     @Reference(interfaceClass = OrderServiceAPI.class, check = false)
     OrderServiceAPI orderServiceAPI;
+
+    @Autowired
+    MyOssClientUtil myOssClient;
 
 
     // 支付宝当面付2.0服务
@@ -77,9 +85,20 @@ public class AliPayServiceAPIImpl implements AliPayServiceAPI {
         if (filePath == null || filePath.trim().length() == 0) {
             return null;
         } else {
+            File file = new File(filePath);
+            //String uuid = String.valueOf(UUID.randomUUID());
+                //file.renameTo(new File(uuid));
+            //将二维码上传到阿里云
+            try {
+                myOssClient.upload(file);
+
+            } catch (Exception e) {
+                log.info("上传阿里云失败",e);
+            }
+            String url = myOssClient.getUrl(file.getName());
             AliPayInfoVO aliPayInfoVO = new AliPayInfoVO();
             aliPayInfoVO.setOrderId(orderId);
-            aliPayInfoVO.setQRCodeAddress(filePath);
+            aliPayInfoVO.setQRCodeAddress(url);
             return aliPayInfoVO;
         }
     }
@@ -123,7 +142,7 @@ public class AliPayServiceAPIImpl implements AliPayServiceAPI {
                 log.info("查询返回该订单支付成功: )");
 
                 //当订单支付成功后将订单状态改为1（成功）
-                flag = orderServiceAPI.paySuccess(orderId);
+                //flag = orderServiceAPI.paySuccess(orderId);
 
                 /*AlipayTradeQueryResponse response = result.getResponse();
 
@@ -195,13 +214,13 @@ public class AliPayServiceAPIImpl implements AliPayServiceAPI {
         // 商品明细列表，需填写购买商品详细信息，
         List<GoodsDetail> goodsDetailList = new ArrayList<GoodsDetail>();
         // 创建一个商品信息，参数含义分别为商品id（使用国标）、名称、单价（单位为分）、数量，如果需要添加商品类别，详见GoodsDetail
-        //GoodsDetail goods1 = GoodsDetail.newInstance("goods_id001", "xxx小面包", 1000, 1);
+        GoodsDetail goods1 = GoodsDetail.newInstance("goods_id001", "xxx小面包", 1000, 1);
         // 创建好一个商品后添加至商品明细列表
-       // goodsDetailList.add(goods1);
+        goodsDetailList.add(goods1);
 
         // 继续创建并添加第一条商品信息，用户购买的产品为“黑人牙刷”，单价为5.00元，购买了两件
-        //GoodsDetail goods2 = GoodsDetail.newInstance("goods_id002", "xxx牙刷", 500, 2);
-        //goodsDetailList.add(goods2);
+        GoodsDetail goods2 = GoodsDetail.newInstance("goods_id002", "xxx牙刷", 500, 2);
+        goodsDetailList.add(goods2);
 
         // 创建扫码支付请求builder，设置请求参数
         AlipayTradePrecreateRequestBuilder builder = new AlipayTradePrecreateRequestBuilder()
@@ -220,10 +239,11 @@ public class AliPayServiceAPIImpl implements AliPayServiceAPI {
                 AlipayTradePrecreateResponse response = result.getResponse();
 
                 // 需要修改为运行机器上的路径
-                filePath = String.format("D:/temp/pic/qr-%s.png",
+                // 需要修改为运行机器上的路径
+                filePath = String.format("D:\\project4/code/qr-%s.png",
                         response.getOutTradeNo());
                 log.info("filePath:" + filePath);
-                //                ZxingUtils.getQRCodeImge(response.getQrCode(), 256, filePath);
+                ZxingUtils.getQRCodeImge(response.getQrCode(), 256, filePath);
                 break;
 
             case FAILED:

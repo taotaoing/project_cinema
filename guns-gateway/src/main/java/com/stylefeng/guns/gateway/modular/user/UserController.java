@@ -2,24 +2,35 @@ package com.stylefeng.guns.gateway.modular.user;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.stylefeng.guns.gateway.common.CurrentUser;
+import com.stylefeng.guns.gateway.modular.auth.util.TokenUtil;
 import com.stylefeng.guns.gateway.modular.vo.ResponseVO;
 import com.stylefeng.guns.api.user.UserAPI;
 import com.stylefeng.guns.api.user.vo.UserInfoModel;
 import com.stylefeng.guns.api.user.vo.UserModel;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author 申涛涛
  * @date 2019/8/29 19:23
  */
+@Slf4j
 @RestController
 @RequestMapping("/user")
 public class UserController {
 
     @Reference(interfaceClass = UserAPI.class, check = false)
     UserAPI userAPI;
+
+    @Autowired
+    TokenUtil tokenUtil;
 
     @RequestMapping(value = "/register",method = RequestMethod.POST)
     public ResponseVO register(UserModel userModel) {
@@ -52,31 +63,71 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "logout", method = RequestMethod.GET)
-    public ResponseVO logout() {
+    /**
+     * @creator shentaotao
+     * @creat date 2019/9/5 11:52
+     * @param   username    登录用户名
+     * @param   password    登录用户密码
+     * @return com.stylefeng.guns.gateway.modular.vo.ResponseVO
+     * @throws
+     * @since
+     */
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public ResponseVO login(String username, String password) {
+        if (StringUtils.isAnyBlank(username,password)) {
+            log.info("用户名或密码不能为空");
+            return ResponseVO.serviceFail("用户名或密码不能为空");
+        }
 
-        return ResponseVO.success("成功退出");
+        int login = userAPI.login(username, password);
+        if (login > 0) {
+            log.info("登录成功");
+            return ResponseVO.success("登录成功");
+        }
+
+        return ResponseVO.serviceFail("登录失败");
+    }
+
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public ResponseVO logout(HttpServletRequest request, HttpServletResponse response) {
+        Boolean aBoolean = tokenUtil.delTokenFromCache(request, response);
+        if (aBoolean) {
+            return ResponseVO.success("成功退出");
+        }
+        return ResponseVO.success("退出失败");
     }
 
     @RequestMapping(value = "/getUserInfo", method = RequestMethod.GET)
-    public ResponseVO getUserInfo() {
-        String userId = CurrentUser.getUserId();
-        if (userId != null && userId.trim().length() > 0) {
+    public ResponseVO getUserInfo(HttpServletRequest request, HttpServletResponse response) {
+        //获取用户 userId
+        ResponseVO responseVO = tokenUtil.getUserId(request, response);
+        // 3 表示过期
+        if (3 == responseVO.getStatus()) {
+            return ResponseVO.expire();
+        }
+        String userId = responseVO.getMsg();
+        if (StringUtils.isBlank(userId)) {
             UserInfoModel userInfo = userAPI.getUserInfo(Integer.parseInt(userId));
             if (userInfo != null) {
                 return ResponseVO.success(userInfo);
             } else {
                 return ResponseVO.serviceFail("查询失败");
             }
-        } else {
+        }else {
             return ResponseVO.serviceFail("用户尚未登陆");
         }
     }
 
     @RequestMapping(value = "/updateUserInfo", method = RequestMethod.POST)
-    public ResponseVO updateUserInfo(UserInfoModel userInfoModel) {
-        String userId = CurrentUser.getUserId();
-        if (userId != null && userId.trim().length() > 0) {
+    public ResponseVO updateUserInfo(UserInfoModel userInfoModel, HttpServletRequest request, HttpServletResponse response) {
+        //获取用户 userId
+        ResponseVO responseVO = tokenUtil.getUserId(request, response);
+        // 3 表示过期
+        if (3 == responseVO.getStatus()) {
+            return ResponseVO.expire();
+        }
+        String userId = responseVO.getMsg();
+        if (StringUtils.isBlank(userId)) {
             Integer uuid = Integer.valueOf(userId);
             //判断修改userId是否为当前登录的用户
             if (uuid != userInfoModel.getUuid()) {
@@ -88,7 +139,7 @@ public class UserController {
             } else {
                 return ResponseVO.serviceFail("查询失败");
             }
-        } else {
+        }else {
             return ResponseVO.serviceFail("用户尚未登陆");
         }
     }

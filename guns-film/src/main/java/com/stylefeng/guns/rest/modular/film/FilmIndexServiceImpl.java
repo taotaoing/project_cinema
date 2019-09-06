@@ -75,6 +75,7 @@ public class FilmIndexServiceImpl implements FilmIndexService {
         int nums = mtimeFilmTMapper.countHotFilms();
         FilmVo filmVo = new FilmVo();
         filmVo.setFilmNum(nums);
+
         List<FilmInfo> filmInfos = mtimeFilmTMapper.selectFilms();
         filmVo.setFilmInfo(filmInfos);
         return filmVo;

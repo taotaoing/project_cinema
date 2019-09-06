@@ -7,7 +7,7 @@ import com.stylefeng.guns.api.film.filmService.FilmService;
 import com.stylefeng.guns.api.film.filmVo.FilmConditionVo;
 import com.stylefeng.guns.api.film.filmVo.FilmIndexVo;
 import com.stylefeng.guns.api.film.vo.FilmDetailVO;
-import com.stylefeng.guns.api.film.vo.FilmInfoVO;
+import com.stylefeng.guns.api.film.vo.FilmInfo;
 import com.stylefeng.guns.api.film.vo.FilmRequestVO;
 import com.stylefeng.guns.gateway.modular.film.vo.ResponseVo;
 import org.apache.ibatis.annotations.Param;
@@ -47,7 +47,7 @@ public class FilmIndexController {
     // 影片查询
     @RequestMapping(value = "getFilms", method = RequestMethod.GET)
     public Map<String, Object> getFilms(FilmRequestVO filmRequestVO) {
-        List<FilmInfoVO> films = filmService.getFilms(filmRequestVO.getShowType(), filmRequestVO.getCatId(), filmRequestVO.getSourceId(), filmRequestVO.getYearId());
+        List<FilmInfo> films = filmService.getFilms(filmRequestVO.getShowType(), filmRequestVO.getCatId(), filmRequestVO.getSourceId(), filmRequestVO.getYearId());
         Map<String, Object> responseMsg = new HashMap<>();
         responseMsg.put("status", 0);
         responseMsg.put("imgPre", "http://img.meetingshop.cn/");

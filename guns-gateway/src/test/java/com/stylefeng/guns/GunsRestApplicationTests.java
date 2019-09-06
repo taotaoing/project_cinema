@@ -1,5 +1,6 @@
 package com.stylefeng.guns;
 
+import com.alibaba.fastjson.JSON;
 import com.stylefeng.guns.gateway.modular.cinema.CinemaController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,9 +44,8 @@ public class GunsRestApplicationTests {
 
 	@Test
 	public void mytest2() {
-		CinemaController cinemaController = new CinemaController();
-		HashMap fields = cinemaController.getFields(1);
-		System.out.println("fields = " + fields);
+		String s = JSON.toJSONString("2");
+
 	}
 
 }

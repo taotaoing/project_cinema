@@ -2,9 +2,8 @@ package com.stylefeng.guns.rest.common.persistence.dao;
 
 import com.stylefeng.guns.rest.common.persistence.model.MtimeFilmT;
 import com.stylefeng.guns.api.film.vo.FilmDetail;
-import com.stylefeng.guns.api.film.vo.FilmInfoVO;
+import com.stylefeng.guns.api.film.vo.FilmInfo;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
-import com.stylefeng.guns.api.film.filmVo.FilmInfo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -20,11 +19,11 @@ import java.util.List;
 public interface MtimeFilmTMapper extends BaseMapper<MtimeFilmT> {
     int countHotFilms();
 
-    List<FilmInfo> selectFilms();
+    List<com.stylefeng.guns.api.film.filmVo.FilmInfo> selectFilms();
 
     int countSoonFilms();
 
-    List<FilmInfoVO> getFilms(@Param("showType") int showType, @Param("sourceId") int sourceId, @Param("yearId") int yearId);
+    List<com.stylefeng.guns.api.film.vo.FilmInfo> getFilms(@Param("showType") int showType, @Param("sourceId") int sourceId, @Param("yearId") int yearId);
 
     FilmDetail getFilmDetailByFilmId(@Param("filmId") int filmId);
 

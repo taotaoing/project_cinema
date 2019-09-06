@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 public class ResponseVO<M> {
     //返回状态  0-成功，1-失败，999-系统异常
-    private int status;
+    private Integer status;
     //返回信息
     private String msg;
     //返回实体
@@ -17,8 +17,8 @@ public class ResponseVO<M> {
     // 图片前缀
     private String imgPre;
     // 分页使用
-    private int nowPage;
-    private int totalPage;
+    private Integer nowPage;
+    private Integer totalPage;
 
     public ResponseVO() {
     }
@@ -86,6 +86,22 @@ public class ResponseVO<M> {
         responseVO.setStatus(1);
         responseVO.setMsg(msg);
 
+        return responseVO;
+    }
+
+    /**
+     * 过期 3
+     * @creator shentaotao
+     * @creat date 2019/9/5 15:10
+     * @param
+     * @return com.stylefeng.guns.gateway.modular.vo.ResponseVO
+     * @throws
+     * @since
+     */
+    public static<M> ResponseVO expire() {
+        ResponseVO responseVO = new ResponseVO();
+        responseVO.setStatus(3);
+        responseVO.setMsg("token已过期");
         return responseVO;
     }
 }

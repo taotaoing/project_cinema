@@ -38,7 +38,13 @@ spring:
     registry: zookeeper://localhost:2181
     protocol:
       name: dubbo
-      port: 20881
+      port: 20886
+
+mq:
+  nameserver:
+    address: 127.0.0.1:9876
+  topic: stock
+
 logging:
   level.root: info
   level.com.stylefeng: debug

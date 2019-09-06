@@ -179,44 +179,44 @@ public class CinemaServiceImpl implements CinemaServiceAPI {
         return hallTypeVOS;
     }
     @Override
-    public CinemaInfoVO getCinemaInfoById(int cinemaId){
+    public CinemaInfo getCinemaInfoById(int cinemaId){
 
         // 数据实体
         MtimeCinemaT moocCinemaT =mtimeCinemaTMapper.selectById(cinemaId);
         // 将数据实体转换成业务实体
-        CinemaInfoVO cinemaInfoVO = new CinemaInfoVO();
-        cinemaInfoVO.setCinemaAdress(moocCinemaT.getCinemaAddress());
-        cinemaInfoVO.setImgUrl(moocCinemaT.getImgAddress());
-        cinemaInfoVO.setCinemaPhone(moocCinemaT.getCinemaPhone());
-        cinemaInfoVO.setCinemaName(moocCinemaT.getCinemaName());
-        cinemaInfoVO.setCinemaId(moocCinemaT.getUuid()+"");
+        CinemaInfo CinemaInfo = new CinemaInfo();
+        CinemaInfo.setCinemaAdress(moocCinemaT.getCinemaAddress());
+        CinemaInfo.setImgUrl(moocCinemaT.getImgAddress());
+        CinemaInfo.setCinemaPhone(moocCinemaT.getCinemaPhone());
+        CinemaInfo.setCinemaName(moocCinemaT.getCinemaName());
+        CinemaInfo.setCinemaId(moocCinemaT.getUuid()+"");
 
-        return cinemaInfoVO;
+        return CinemaInfo;
     }
 
     //6、获取所有电影的信息和对应的放映场次信息，根据影院编号
     @Override
-    public List<FilmInfoVO> getFilmInfoByCinemaId(int cinemaId){
+    public List<FilmInfo> getFilmInfoByCinemaId(int cinemaId){
 
-        List<FilmInfoVO> filmInfos = mtimeFieldTMapper.getFilmInfos(cinemaId);
+        List<FilmInfo> filmInfos = mtimeFieldTMapper.getFilmInfos(cinemaId);
 
         return filmInfos;
     }
     //7、根据放映场次ID获取放映信息
     @Override
-    public HallInfoVO getFilmFieldInfo(int fieldId){
+    public HallInfo getFilmFieldInfo(int fieldId){
 
-        HallInfoVO hallInfoVO = mtimeFieldTMapper.getHallInfo(fieldId);
+        HallInfo HallInfo = mtimeFieldTMapper.getHallInfo(fieldId);
 
-        return hallInfoVO;
+        return HallInfo;
     }
     //8、根据放映场次查询播放的电影编号，然后根据电影编号获取对应的电影信息
     @Override
-    public FilmInfoVO getFilmInfoByFieldId(int fieldId){
+    public FilmInfo getFilmInfoByFieldId(int fieldId){
 
-        FilmInfoVO filmInfoVO = mtimeFieldTMapper.getFilmInfoById(fieldId);
+        FilmInfo FilmInfo = mtimeFieldTMapper.getFilmInfoById(fieldId);
 
-        return filmInfoVO;
+        return FilmInfo;
     }
 
     @Override

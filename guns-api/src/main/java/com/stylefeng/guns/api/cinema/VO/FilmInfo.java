@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Data
-public class FilmInfoVO implements Serializable {
+public class FilmInfo implements Serializable {
 
     private String filmId;
     private String filmName;
@@ -15,7 +15,7 @@ public class FilmInfoVO implements Serializable {
     private String filmCats;
     private String actors;
     private String imgAddress;
-    private List<FilmFieldVO> filmFields;
+    private List<FilmFields> filmFields;
 
     public String getFilmId() {
         return filmId;
@@ -73,11 +73,11 @@ public class FilmInfoVO implements Serializable {
         this.imgAddress = imgAddress;
     }
 
-    public List<FilmFieldVO> getFilmFields() {
+    public List<FilmFields> getFilmFields() {
         return filmFields;
     }
 
-    public void setFilmFields(List<FilmFieldVO> filmFields) {
+    public void setFilmFields(List<FilmFields> filmFields) {
         this.filmFields = filmFields;
     }
 }

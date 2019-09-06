@@ -12,7 +12,7 @@ public class FilmsVO implements Serializable {
     private String imgPre;
     private int nowPage;
     private int totalPage;
-    private List<FilmInfoVO> filmInfoVO;
+    private List<FilmInfo> FilmInfo;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -50,11 +50,11 @@ public class FilmsVO implements Serializable {
         this.totalPage = totalPage;
     }
 
-    public List<FilmInfoVO> getFilmInfoVO() {
-        return filmInfoVO;
+    public List<FilmInfo> getFilmInfo() {
+        return FilmInfo;
     }
 
-    public void setFilmInfoVO(List<FilmInfoVO> filmInfoVO) {
-        this.filmInfoVO = filmInfoVO;
+    public void setFilmInfo(List<FilmInfo> FilmInfo) {
+        this.FilmInfo = FilmInfo;
     }
 }

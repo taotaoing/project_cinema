@@ -61,7 +61,7 @@ public class ZxingUtils {
 			BitMatrix bitMatrix = new MultiFormatWriter().encode(contents, BarcodeFormat.QR_CODE, width, height, hints);
 
             File imageFile = new File(imgPath);
-			writeToFile(bitMatrix, "png", imageFile);
+            writeToFile(bitMatrix, "png", imageFile);
 
             return imageFile;
 

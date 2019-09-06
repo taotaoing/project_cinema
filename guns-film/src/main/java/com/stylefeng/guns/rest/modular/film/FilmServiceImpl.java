@@ -36,9 +36,9 @@ public class FilmServiceImpl implements FilmService {
     MtimeActorTMapper actorTMapper;
 
     @Override
-    public List<FilmInfoVO> getFilms(int showType, int catId, int sourceId, int yearId) {
-        List<FilmInfoVO> films = filmMapper.getFilms(showType, sourceId, yearId);
-        Iterator<FilmInfoVO> iterator = films.iterator();
+    public List<FilmInfo> getFilms(int showType, int catId, int sourceId, int yearId) {
+        List<FilmInfo> films = filmMapper.getFilms(showType, sourceId, yearId);
+        Iterator<FilmInfo> iterator = films.iterator();
         if (catId != 99) {
             while (iterator.hasNext()) {
                 if (!iterator.next().getCatId().contains(String.valueOf(catId))) {
@@ -85,6 +85,14 @@ public class FilmServiceImpl implements FilmService {
         // 获得电影的导演
         // MtimeActorT directorT = actorTMapper.selectById(mtimeFilmInfoT.getDirectorId());
         MtimeActorT directorT = actorTMapper.selectById(mtimeFilmInfoT.getDirectorId());
+        ImgVO imgVO = new ImgVO();
+        String[] imgSplit = mtimeFilmInfoT.getFilmImgs().split(",");
+        imgVO.setMainImg(imgSplit[0]);
+        imgVO.setImg01(imgSplit[1]);
+        imgVO.setImg02(imgSplit[2]);
+        imgVO.setImg03(imgSplit[3]);
+        imgVO.setImg04(imgSplit[4]);
+
         Map<String, Object> director = new HashMap<>();
         director.put("imgAddress", directorT.getActorImg());
         director.put("directorName", directorT.getActorName());
@@ -93,18 +101,13 @@ public class FilmServiceImpl implements FilmService {
         List actors = actorTMapper.queryActorInfosByFilmId(filmDetail.getFilmId());
         actorMap.put("actors",actors);
         info04.put("actors", actorMap);
+        info04.put("imgVO",imgVO);
+        info04.put("filmId",filmDetail.getFilmId());
         filmDetailVO.setScoreNum(filmDetailVO.getScoreNum() + "万人评分");
         filmDetailVO.setInfo01(info01.toString());
         filmDetailVO.setInfo02(info02);
         filmDetailVO.setInfo03(info03);
         filmDetailVO.setInfo04(info04);
-        ImgVO imgVO = new ImgVO();
-        String[] imgSplit = mtimeFilmInfoT.getFilmImgs().split(",");
-        imgVO.setMainImg(imgSplit[0]);
-        imgVO.setImg01(imgSplit[1]);
-        imgVO.setImg02(imgSplit[2]);
-        imgVO.setImg03(imgSplit[3]);
-        imgVO.setImg04(imgSplit[4]);
         filmDetailVO.setImgVO(imgVO);
         return filmDetailVO;
     }

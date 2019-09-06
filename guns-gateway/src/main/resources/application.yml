@@ -41,6 +41,18 @@ spring:
       port: 20880
     consumer:
       timeout: 50000
+  redis:
+    host: 106.15.200.96
+    password: 8956230/
+    port: 6379
+    jedis:
+      pool:
+        max-active: 200
+        max-idle: 20
+        min-idle: 0
+        max-wait: -1
+    timeout: 10000
+    database: 0
 
 logging:
   level.root: info

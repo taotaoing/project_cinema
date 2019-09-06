@@ -5,7 +5,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Data
-public class FilmInfoVO implements Serializable {
+public class FilmInfo implements Serializable {
     private static final long serialVersionUID = 269871976241895023L;
     private String filmId;
     private int filmType;

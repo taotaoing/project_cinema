@@ -39,6 +39,14 @@ spring:
     protocol:
       name: dubbo
       port: 20885
+
+myoss:
+  bucket: meetingfilm
+  endpoint: http://oss-cn-beijing.aliyuncs.com
+  access-key: LTAI4Fc7HsAaCZKXdWWks3X4
+  secret: ieQvUHoBxB90gedJdcEaMWV5lfcp3k
+
+
 logging:
   level.root: info
   level.com.stylefeng: debug

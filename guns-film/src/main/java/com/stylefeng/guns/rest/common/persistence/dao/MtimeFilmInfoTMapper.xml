@@ -15,7 +15,7 @@
         <result column="film_imgs" property="filmImgs" />
     </resultMap>
 
-    <resultMap id="FilmInfoResultMap" type="com.stylefeng.guns.api.film.vo.FilmInfoVO">
+    <resultMap id="FilmInfoResultMap" type="com.stylefeng.guns.api.film.vo.FilmInfo">
         <result column="UUID" property="filmId" />
         <result column="film_type" property="filmType" />
         <result column="img_address" property="imgAddress" />

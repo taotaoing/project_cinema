@@ -7,12 +7,18 @@ import com.stylefeng.guns.api.Respond.ResponseVo;
 import com.stylefeng.guns.api.cinema.VO.OrderVO;
 import com.stylefeng.guns.api.order.OrderServiceAPI;
 import com.stylefeng.guns.gateway.common.CurrentUser;
+import com.stylefeng.guns.gateway.modular.auth.util.TokenUtil;
+import com.stylefeng.guns.gateway.modular.vo.ResponseVO;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,9 +30,15 @@ public class OrderController {
     @Reference(interfaceClass = OrderServiceAPI.class, check = false)
     OrderServiceAPI orderServiceAPI;
 
+    @Autowired
+    RedisTemplate redisTemplate;
+
+    @Autowired
+    TokenUtil tokenUtil;
+
 
     @RequestMapping(value = "buyTickets", method = RequestMethod.POST)
-    public ResponseVo buyTickets(Integer fieldId, String soldSeats, String seatsName) {
+    public ResponseVo buyTickets(Integer fieldId, String soldSeats, String seatsName, HttpServletRequest request, HttpServletResponse response) {
         if(tokenBucket.getToken()){
             // 验证售出的票是否为真
             boolean isTrue = orderServiceAPI.isTureSeats(fieldId+"",soldSeats);
@@ -37,8 +49,12 @@ public class OrderController {
             // 验证，上述两个内容有一个不为真，则不创建订单信息
             if(isTrue && isNotSold){
                 // 创建订单信息,注意获取登陆人
-                String userId = CurrentUser.getUserId();
-                if(userId == null || userId.trim().length() == 0){
+                ResponseVO responseVO = tokenUtil.getUserId(request, response);
+                if (responseVO == null) {
+                    return ResponseVo.Fail("用户未登陆");
+                }
+                String userId = responseVO.getMsg();
+                if(StringUtils.isBlank(userId)){
                     return ResponseVo.Fail("用户未登陆");
                 }
                 OrderVO orderVO = orderServiceAPI.saveOrderInfo(fieldId,soldSeats,seatsName,Integer.parseInt(userId));
@@ -57,9 +73,17 @@ public class OrderController {
     @RequestMapping(value = "getOrderInfo",method = RequestMethod.POST)
     public ResponseVo getOrderInfo(
             @RequestParam(name="nowPage",required = false,defaultValue = "1")Integer nowPage,
-            @RequestParam(name="pageSize",required = false,defaultValue = "5")Integer pageSize){
+            @RequestParam(name="pageSize",required = false,defaultValue = "5")Integer pageSize,
+            HttpServletRequest request,HttpServletResponse response){
         // 获取当前登陆人的信息
-        String userId = CurrentUser.getUserId();
+        ResponseVO responseVO = tokenUtil.getUserId(request, response);
+        if (responseVO == null) {
+            return ResponseVo.Fail("用户未登陆");
+        }
+        String userId = responseVO.getMsg();
+        if(StringUtils.isBlank(userId)){
+            return ResponseVo.Fail("用户未登陆");
+        }
 
         // 使用当前登陆人获取已经购买的订单
         Page<OrderVO> page = new Page<>(nowPage,pageSize);

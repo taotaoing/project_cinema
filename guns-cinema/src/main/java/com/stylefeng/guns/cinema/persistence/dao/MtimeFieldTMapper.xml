@@ -14,7 +14,7 @@
         <result column="price" property="price" />
     </resultMap>
     <!-- 一对多的查询 -->
-    <resultMap id="getFilmInfoMap" type="com.stylefeng.guns.api.cinema.VO.FilmInfoVO">
+    <resultMap id="getFilmInfoMap" type="com.stylefeng.guns.api.cinema.VO.FilmInfo">
         <result column="film_id" property="filmId"></result>
         <result column="film_name" property="filmName"></result>
         <result column="film_length" property="filmLength"></result>
@@ -22,7 +22,7 @@
         <result column="film_cats" property="filmCats"></result>
         <result column="actors" property="actors"></result>
         <result column="img_address" property="imgAddress"></result>
-        <collection property="filmFields" ofType="com.stylefeng.guns.api.cinema.VO.FilmFieldVO">
+        <collection property="filmFields" ofType="com.stylefeng.guns.api.cinema.VO.FilmFields">
             <result column="UUID" property="fieldId"></result>
             <result column="begin_time" property="beginTime"></result>
             <result column="end_time" property="endTime"></result>
@@ -47,27 +47,27 @@
             f.`hall_name`,
             f.`price`
         FROM
-            mooc_hall_film_info_t info
+            mtime_hall_film_info_t info
                 LEFT JOIN
-            mooc_field_t f
+            mtime_field_t f
             ON f.`film_id` = info.`film_id`
                 AND f.`cinema_id` = ${cinemaId}
     </select>
 
-    <select id="getHallInfo" parameterType="java.lang.Integer" resultType="com.stylefeng.guns.api.cinema.VO.HallInfoVO">
+    <select id="getHallInfo" parameterType="java.lang.Integer" resultType="com.stylefeng.guns.api.cinema.VO.HallInfo">
         SELECT
             f.`UUID` AS hallFieldId,
             f.`hall_name` AS hallName,
             f.`price` AS price,
             hall.`seat_address` AS seatFile
         FROM
-            mooc_hall_dict_t hall,
-            mooc_field_t f
+            mtime_hall_dict_t hall,
+            mtime_field_t f
         WHERE f.`hall_id` = hall.`UUID`
           AND f.`UUID` = 1
     </select>
 
-    <select id="getFilmInfoById" parameterType="java.lang.Integer" resultType="com.stylefeng.guns.api.cinema.VO.FilmInfoVO">
+    <select id="getFilmInfoById" parameterType="java.lang.Integer" resultType="com.stylefeng.guns.api.cinema.VO.FilmInfo">
         SELECT
             f.`film_id` AS filmId,
             info.`film_name` AS filmName,
@@ -77,8 +77,8 @@
             info.`actors` AS actors,
             info.`img_address` AS imgAddress
         FROM
-            mooc_field_t f,
-            mooc_hall_film_info_t info
+            mtime_field_t f,
+            mtime_hall_film_info_t info
         WHERE f.`film_id` = info.`film_id`
           AND f.`UUID` = ${fieldId}
     </select>

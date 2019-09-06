@@ -7,6 +7,8 @@ import com.stylefeng.guns.api.cinema.FieldServiceAPI;
 import com.stylefeng.guns.api.cinema.VO.*;
 import com.stylefeng.guns.api.cinema.VO.getFieldInfo.FieldInfo;
 import com.stylefeng.guns.api.cinema.VO.getFields.Fields;
+import com.stylefeng.guns.gateway.modular.cinema.VO.CinemaFieldResponseVO;
+import com.stylefeng.guns.gateway.modular.cinema.VO.CinemaFieldsResponseVO;
 import com.stylefeng.guns.gateway.modular.cinema.VO.CinemaListResponseVO;
 import com.stylefeng.guns.gateway.modular.cinema.VO.ResponseVO;
 import com.stylefeng.guns.gateway.modular.cinema.utils.Result;
@@ -79,7 +81,27 @@ public class CinemaController {
 
 
     @RequestMapping("getFields")
-    public HashMap getFields(int cinemaId){
+    public ResponseVO getFields(Integer cinemaId) {
+        if (cinemaId == null || cinemaId <= 0) {
+            return ResponseVO.serviceFail("输入的 cinemaId 不合法");
+        }
+        try {
+            CinemaInfo cinemaInfo = cinemaServiceAPI.getCinemaInfoById(cinemaId);
+            List<FilmInfo> filmList = cinemaServiceAPI.getFilmInfoByCinemaId(cinemaId);
+            CinemaFieldsResponseVO cinemaFieldsResponseVO = new CinemaFieldsResponseVO();
+            cinemaFieldsResponseVO.setCinemaInfo(cinemaInfo);
+            cinemaFieldsResponseVO.setFilmList(filmList);
+
+            return ResponseVO.success(IMG_PRE, cinemaFieldsResponseVO);
+        } catch (Exception e) {
+            log.info("影院信息查询失败",e);
+            return ResponseVO.serviceFail("影院信息查询失败");
+        }
+
+    }
+
+
+    /*public HashMap getFields(int cinemaId){
         Fields fields = fieldServiceAPI.searchFieldsByCinemaId(cinemaId);
         int status;
         if(fields!=null){
@@ -90,10 +112,32 @@ public class CinemaController {
         }
         HashMap map = Result.response(status, fields);
         return map;
-    }
+    }*/
 
     @RequestMapping("getFieldInfo")
-    public HashMap getFieldInfo(int cinemaId,int fieldId){
+    public ResponseVO getFieldInfo(Integer cinemaId, Integer fieldId) {
+        if (cinemaId == null || fieldId == null) {
+            return ResponseVO.serviceFail("请求的 cinemaId 或 fieldId 不合法");
+        }
+        try {
+            CinemaInfo cinemaInfo = cinemaServiceAPI.getCinemaInfoById(cinemaId);
+            FilmInfo filmInfo = cinemaServiceAPI.getFilmInfoByFieldId(fieldId);
+            HallInfo hallInfo = cinemaServiceAPI.getFilmFieldInfo(fieldId);
+
+            CinemaFieldResponseVO cinemaFieldResponseVO = new CinemaFieldResponseVO();
+            cinemaFieldResponseVO.setCinemaInfo(cinemaInfo);
+            cinemaFieldResponseVO.setFilmInfo(filmInfo);
+            cinemaFieldResponseVO.setHallInfo(hallInfo);
+
+            return ResponseVO.success(IMG_PRE, cinemaFieldResponseVO);
+        } catch (Exception e) {
+            log.info("获取场次信息失败",e);
+            return ResponseVO.serviceFail("获取场次信息失败");
+        }
+    }
+
+
+    /*public HashMap getFieldInfo(int cinemaId,int fieldId){
         FieldInfo fieldInfo = fieldServiceAPI.searchFieldInfoByCinemaIdAndFieldId(cinemaId,fieldId);
         int status;
         if(fieldInfo!=null){
@@ -104,6 +148,6 @@ public class CinemaController {
         }
         HashMap map = Result.response(status, fieldInfo);
         return map;
-    }
+    }*/
 
 }

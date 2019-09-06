@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.stylefeng.guns.api.cinema.CinemaServiceAPI;
-import com.stylefeng.guns.api.cinema.VO.FilmInfoVO;
+import com.stylefeng.guns.api.cinema.VO.FilmInfo;
 import com.stylefeng.guns.api.cinema.VO.OrderQueryVO;
 import com.stylefeng.guns.api.cinema.VO.OrderVO;
 import com.stylefeng.guns.api.film.filmService.FilmConditionService;
@@ -95,8 +95,8 @@ public class MoocOrderTServiceImpl extends ServiceImpl<MoocOrderTMapper, MoocOrd
 
     @Override
     public OrderVO saveOrderInfo(Integer fieldId, String soldSeats, String seatsName, Integer userId) {
-        FilmInfoVO filmInfoVO = cinemaServiceAPI.getFilmInfoByFieldId(fieldId);
-        Integer filmId = Integer.parseInt(filmInfoVO.getFilmId());
+        FilmInfo FilmInfo = cinemaServiceAPI.getFilmInfoByFieldId(fieldId);
+        Integer filmId = Integer.parseInt(FilmInfo.getFilmId());
         String uuid = UUIDUtil.genUuid();
         // 获取影院信息
         OrderQueryVO orderQueryVO = cinemaServiceAPI.getOrderNeeds(fieldId);
@@ -186,8 +186,8 @@ public class MoocOrderTServiceImpl extends ServiceImpl<MoocOrderTMapper, MoocOrd
     }
 
     @Override
-    public boolean paySuccess(String OrderId) {
-        MoocOrderT moocOrderT = moocOrderTMapper.selectById(OrderId);
+    public boolean paySuccess(String orderId) {
+        MoocOrderT moocOrderT = moocOrderTMapper.selectById(orderId);
        //1是成功
         moocOrderT.setOrderStatus(1);
         Integer integer = moocOrderTMapper.updateById(moocOrderT);
@@ -196,6 +196,7 @@ public class MoocOrderTServiceImpl extends ServiceImpl<MoocOrderTMapper, MoocOrd
         }
         return false;
     }
+
 
     @Override
     public boolean payFail(String OrderId) {

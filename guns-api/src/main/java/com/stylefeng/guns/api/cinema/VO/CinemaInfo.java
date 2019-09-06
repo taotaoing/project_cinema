@@ -2,7 +2,7 @@ package com.stylefeng.guns.api.cinema.VO;
 
 import java.io.Serializable;
 
-public class CinemaInfoVO implements Serializable {
+public class CinemaInfo implements Serializable {
 
     private String cinemaId;
     private String imgUrl;

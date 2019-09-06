@@ -5,7 +5,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Data
-public class HallInfoVO implements Serializable {
+public class HallInfo implements Serializable {
 
     private String hallFieldId;
     private String hallName;

@@ -1,5 +1,6 @@
 package com.stylefeng.guns;
 
+import com.alibaba.fastjson.JSON;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -36,6 +37,7 @@ public class GunsRestApplicationTests {
 		System.out.println(demo7==demo8);
 
 		System.out.println(demo9==demo10);
+
 	}
 
 }

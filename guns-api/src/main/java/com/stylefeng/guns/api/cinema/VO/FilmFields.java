@@ -2,7 +2,7 @@ package com.stylefeng.guns.api.cinema.VO;
 
 import java.io.Serializable;
 
-public class FilmFieldVO implements Serializable {
+public class FilmFields implements Serializable {
 
     private String fieldId;
     private String beginTime;
